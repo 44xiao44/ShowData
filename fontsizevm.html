@@ -2,9 +2,9 @@
 <html>
 
 <script >
-  var serverAddress = "http://192.168.1.102:8089/DataServer";
-  var serverAddress_clear = serverAddress + "/clear";
-  var serverAddress_get = serverAddress + "/get";
+  var serverAddressHead = "http://";
+  var serverAddressEnd = "/DataServer";
+
 
 </script>
 <head lang="en">
@@ -55,15 +55,19 @@
     <div class="input_back"></div>
 
     <div class="input">
-      <span style="color:red">时间&nbsp;:&nbsp;</span> <input id="eventTime" style="width:240px;" type="input" value=""/>
+      <span style="color:red">server IP&nbsp;:&nbsp;</span> <input id="serverIP" style="width:210px;" type="input" value=""/>
       <br/>
-      <span style="color:red">类型&nbsp;:&nbsp;</span> <input id="eventType" style="width:240px;" type="input" value=""/>
+      <span style="color:red">server port&nbsp;:&nbsp;</span> <input id="serverPort" style="width:190px;" type="input" value=""/>
       <br/>
-      <span style="color:blue">显示比例&nbsp;:&nbsp;</span> <input id="ratio" type="input" value="0.5"/>
+      <span style="color:red">device ID&nbsp;:&nbsp;</span> <input id="deviceID" style="width:200px;" type="input" value=""/>
       <br/>
-      <span style="color:blue">ID&nbsp;:&nbsp;</span> <input id="deviceID" type="input" value=""/>
+      <span style="color:red">显示比例&nbsp;:&nbsp;</span> <input id="ratio" type="input" value="0.5"/>
       <br/>
-      <span style="color:blue">请输入json内容&nbsp;:&nbsp;</span>
+      <span style="color:blue">时间&nbsp;:&nbsp;</span> <input id="eventTime" style="width:240px;" type="input" value=""/>
+      <br/>
+      <span style="color:blue">类型&nbsp;:&nbsp;</span> <input id="eventType" style="width:240px;" type="input" value=""/>
+      <br/>
+      <span style="color:blue">从server获取的数据内容&nbsp;:&nbsp;</span>
       <br>
       <textarea id="json" style="width:290px" rows="20"  ></textarea>
       <br/>
@@ -333,6 +337,16 @@
     }
 
     function cleanData() {
+
+
+        var serverAddress_clear = serverAddressHead
+        + document.getElementById('serverIP').value
+        + ":"
+        + document.getElementById('serverPort').value
+        + serverAddressEnd
+        + "/clear";
+
+
         var deviceID = document.getElementById('deviceID').value;
         $.ajax({
             type: "post",
@@ -354,6 +368,15 @@
     }
 
     function getData() {
+
+      var serverAddress_get =
+      serverAddressHead
+      + document.getElementById('serverIP').value
+      + ":"
+      + document.getElementById('serverPort').value
+      + serverAddressEnd
+      + "/get";
+
       var deviceID = document.getElementById('deviceID').value;
         $.ajax({
             type: "post",
